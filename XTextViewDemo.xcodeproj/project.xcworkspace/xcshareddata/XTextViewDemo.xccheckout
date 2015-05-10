@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>39CC977D-8193-4287-B282-8BD3FAD1092B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>XTextViewDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>5FD6F8AE68B094B07296DD93F388800ED030906B</key>
+		<string>https://github.com/superxlx/XTextViewDemo.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>XTextViewDemo.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>5FD6F8AE68B094B07296DD93F388800ED030906B</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/superxlx/XTextViewDemo.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>5FD6F8AE68B094B07296DD93F388800ED030906B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>5FD6F8AE68B094B07296DD93F388800ED030906B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>XTextViewDemo</string>
+		</dict>
+	</array>
+</dict>
+</plist>

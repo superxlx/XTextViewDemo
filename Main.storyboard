@@ -98,18 +98,21 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.67836516573065797" blue="0.67020170946390933" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="d66-5j-AXO"/>
+                                    <constraint firstAttribute="width" constant="320" id="Xld-U9-C6z"/>
+                                    <constraint firstAttribute="height" constant="35" id="nc7-hb-o2f"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="S0B-L2-eM7" secondAttribute="trailing" constant="-16" id="BNN-Oy-Dgw"/>
-                            <constraint firstItem="S0B-L2-eM7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="FPD-Eh-h3k"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="S0B-L2-eM7" secondAttribute="bottom" id="crI-yP-vN1"/>
+                            <constraint firstItem="S0B-L2-eM7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="HZX-dh-pRJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="S0B-L2-eM7" secondAttribute="trailing" constant="-16" id="k1I-1Z-5JJ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="S0B-L2-eM7" secondAttribute="bottom" id="xFl-z2-R5H"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aaa" destination="xFl-z2-R5H" id="XUu-d2-GvZ"/>
+                        <outlet property="menuView" destination="S0B-L2-eM7" id="Z9C-XN-HlA"/>
                         <outlet property="textview" destination="HBk-Rh-OnT" id="PyF-sK-Th7"/>
                     </connections>
                 </viewController>

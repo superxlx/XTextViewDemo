@@ -2,10 +2,15 @@ import UIKit
 import AssetsLibrary
 import MobileCoreServices
 import MessageUI
+
+protocol assistProtocol{
+    func insertImage()
+}
 class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,MFMailComposeViewControllerDelegate{
-    var fontSize    = 20
+    var fontSize    = 14
     var controller : UIViewController!
-    var view: UIView!
+    var container: NSTextContainer!
+    var assist: assistProtocol!
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         
@@ -17,15 +22,12 @@ class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelega
     初始化方法
     
     :param: target
-    :param: superView
+    :param: superViewr
     
     :returns: 
     */
-    func initMethod(target: UIViewController,superView: UIView) {
-        var initString                             = NSMutableAttributedString(string: "")
-        self.attributedText                        = initString
+    func initMethod(target: UIViewController) {
         self.controller                            = target
-        self.view                                  = superView
         self.typingAttributes[NSFontAttributeName] = UIFont.systemFontOfSize((CGFloat)(self.fontSize))
     }
     /**
@@ -44,14 +46,14 @@ class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelega
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         var sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         if(buttonIndex != 0){
-            if(buttonIndex==1){                //相册
-                sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            if(buttonIndex==1){
+            sourceType                                        = UIImagePickerControllerSourceType.PhotoLibrary
             }else{
-                sourceType = UIImagePickerControllerSourceType.Camera
+            sourceType                                        = UIImagePickerControllerSourceType.Camera
             }
             let imagePickerController:UIImagePickerController = UIImagePickerController()
             imagePickerController.delegate                    = self
-            imagePickerController.allowsEditing               = true//true为拍照、选择完进入图片编辑模式
+            imagePickerController.allowsEditing               = true
             imagePickerController.sourceType                  = sourceType
             self.controller.presentViewController(imagePickerController, animated: true, completion: {
             })
@@ -61,17 +63,12 @@ class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelega
         var string                                           = NSMutableAttributedString(attributedString: self.attributedText)
         var img                                              = info[UIImagePickerControllerEditedImage] as! UIImage
         img                                                  = self.scaleImage(img)
-
         var textAttachment                                   = NSTextAttachment()
         textAttachment.image                                 = img
 
         var textAttachmentString                             = NSAttributedString(attachment: textAttachment)
-        var countString:Int                                  = count(self.text) as Int
-        //  string.insertAttributedString(textAttachmentString, atIndex: countString)
-
         string.appendAttributedString(textAttachmentString)
-
-        self.attributedText                                  = string
+   //     self.attributedText                                  = string
 
         var storage                                          = NSTextStorage(attributedString: string)
         var layoutmanage                                     = NSLayoutManager()
@@ -80,18 +77,14 @@ class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelega
         storage.addLayoutManager(layoutmanage)
         layoutmanage.textStorage                             = storage
         var y                                                = self.contentOffset.y
-//        var te                                                        = UITextView(frame: self.frame, textContainer: container)
-//        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentedViewController!.view.addSubview(te)
-   //     super.init(frame: self.frame, textContainer: container)
-        self.setContentOffset(CGPoint(x: 0, y: y), animated: true)
-//        self.typingAttributes[NSObliquenessAttributeName]    = 0
-//        self.typingAttributes[NSUnderlineStyleAttributeName] = 0
-//        self.typingAttributes[NSFontAttributeName]           = UIFont.systemFontOfSize((CGFloat)(self.fontSize))
-        picker.dismissViewControllerAnimated(true, completion: nil)
+        self.container = container
+        self.assist.insertImage()
+        picker.dismissViewControllerAnimated(true, completion: { () -> Void in
+        })
     }
     func scaleImage(image:UIImage)->UIImage{
         UIGraphicsBeginImageContext(CGSizeMake(self.bounds.size.width, image.size.height*(self.bounds.size.width/image.size.width)))
-        image.drawInRect(CGRectMake(0, 0, self.bounds.size.width, image.size.height*(self.bounds.size.width/image.size.width)))
+        image.drawInRect(CGRectMake(0, 0, self.bounds.size.width-16, image.size.height*((self.bounds.size.width-16)/image.size.width)))
         var scaledimage                                      = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return scaledimage
@@ -158,13 +151,6 @@ class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelega
     func showSendMailErrorAlert() {
         let sendMailErrorAlert                                   = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
         sendMailErrorAlert.show()
-    }
-    /**
-    强行跳转到底部
-    */
-    func JMPButtom() {
-        var y                                                    = self.contentOffset.y
-        self.setContentOffset(CGPointMake(0, y), animated: false)
     }
     /**
     添加斜体
