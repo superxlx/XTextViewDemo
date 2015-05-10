@@ -27,7 +27,6 @@ class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelega
         self.controller                            = target
         self.view                                  = superView
         self.typingAttributes[NSFontAttributeName] = UIFont.systemFontOfSize((CGFloat)(self.fontSize))
-        self.typingAttributes[NSStrikethroughStyleAttributeName] = 1
     }
     /**
     插入图片
@@ -85,9 +84,9 @@ class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelega
 //        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentedViewController!.view.addSubview(te)
    //     super.init(frame: self.frame, textContainer: container)
         self.setContentOffset(CGPoint(x: 0, y: y), animated: true)
-        self.typingAttributes[NSObliquenessAttributeName]    = 0
-        self.typingAttributes[NSUnderlineStyleAttributeName] = 0
-        self.typingAttributes[NSFontAttributeName]           = UIFont.systemFontOfSize((CGFloat)(self.fontSize))
+//        self.typingAttributes[NSObliquenessAttributeName]    = 0
+//        self.typingAttributes[NSUnderlineStyleAttributeName] = 0
+//        self.typingAttributes[NSFontAttributeName]           = UIFont.systemFontOfSize((CGFloat)(self.fontSize))
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     func scaleImage(image:UIImage)->UIImage{
@@ -100,43 +99,6 @@ class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelega
     }
     func imagePickerControllerDidCancel(picker:UIImagePickerController)    {
         self.controller.dismissViewControllerAnimated(true, completion: nil)
-    }
-    /**
-    添加斜体
-    */
-    func Obliqueness() {
-        var value                                            = self.typingAttributes[NSObliquenessAttributeName] as? NSNumber
-        if value == 0 || value == nil{
-        self.typingAttributes[NSObliquenessAttributeName]    = 0.5
-        }else {
-        self.typingAttributes[NSObliquenessAttributeName]    = 0
-        }
-
-    }
-    /**
-    下划线
-    */
-    func underline() {
-        var value                                            = self.typingAttributes[NSUnderlineStyleAttributeName] as? NSNumber
-        if value == 0 || value == nil {
-        self.typingAttributes[NSUnderlineStyleAttributeName] = 1
-        }else{
-        self.typingAttributes[NSUnderlineStyleAttributeName] = 0
-        }
-    }
-    /**
-    字体增大
-    */
-    func fontincrease() {
-        self.fontSize                                        += 2
-        self.typingAttributes[NSFontAttributeName]           = UIFont.systemFontOfSize((CGFloat)(self.fontSize))
-    }
-    /**
-    字体减小
-    */
-    func fontdecrease() {
-        self.fontSize                                        -= 2
-        self.typingAttributes[NSFontAttributeName]           = UIFont.systemFontOfSize((CGFloat)(self.fontSize))
     }
     /**
     调用系统邮件功能，制作长图片发送
@@ -171,14 +133,14 @@ class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelega
 
         var image : UIImage!
         UIGraphicsBeginImageContext(self.contentSize)
-        var savedContentOffset                               = self.contentOffset
-        var savedFrame                                       = self.frame
-        self.contentOffset                                   = CGPointZero
-        self.frame                                           = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)
+        var savedContentOffset                                   = self.contentOffset
+        var savedFrame                                           = self.frame
+        self.contentOffset                                       = CGPointZero
+        self.frame                                               = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)
         self.layer.renderInContext(UIGraphicsGetCurrentContext())
-        image                                                = UIGraphicsGetImageFromCurrentImageContext()
-        self.contentOffset                                   = savedContentOffset
-        self.frame                                           = savedFrame
+        image                                                    = UIGraphicsGetImageFromCurrentImageContext()
+        self.contentOffset                                       = savedContentOffset
+        self.frame                                               = savedFrame
         UIGraphicsEndPDFContext()
         return image
     }
@@ -194,9 +156,76 @@ class XTextView : UITextView,UIActionSheetDelegate,UIImagePickerControllerDelega
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
     func showSendMailErrorAlert() {
-        let sendMailErrorAlert                               = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        let sendMailErrorAlert                                   = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
         sendMailErrorAlert.show()
     }
+    /**
+    强行跳转到底部
+    */
+    func JMPButtom() {
+        var y                                                    = self.contentOffset.y
+        self.setContentOffset(CGPointMake(0, y), animated: false)
+    }
+    /**
+    添加斜体
+    */
+    func Obliqueness() {
+        var value                                                = self.typingAttributes[NSObliquenessAttributeName] as? NSNumber
+        if value == 0 || value == nil{
+        self.typingAttributes[NSObliquenessAttributeName]        = 0.5
+        }else {
+        self.typingAttributes[NSObliquenessAttributeName]        = 0
+        }
+    }
+    /**
+    下划线
+    */
+    func underline() {
+        var value                                                = self.typingAttributes[NSUnderlineStyleAttributeName] as? NSNumber
+        if value == 0 || value == nil {
+        self.typingAttributes[NSUnderlineStyleAttributeName]     = 1
+        }else{
+        self.typingAttributes[NSUnderlineStyleAttributeName]     = 0
+        }
+    }
+    /**
+    设置下划线颜色
+    */
+    func underlineColor(color: UIColor) {
+        self.typingAttributes[NSUnderlineColorAttributeName]     = color
+    }
+    /**
+    字体增大
+    */
+    func fontincrease() {
+        self.fontSize                                            += 2
+        self.typingAttributes[NSFontAttributeName]               = UIFont.systemFontOfSize((CGFloat)(self.fontSize))
+    }
+    /**
+    字体减小
+    */
+    func fontdecrease() {
+        self.fontSize                                            -= 2
+        self.typingAttributes[NSFontAttributeName]               = UIFont.systemFontOfSize((CGFloat)(self.fontSize))
+    }
+    /**
+    添加删除线
+    */
+    func strikethrough() {
+        var value                                                = self.typingAttributes[NSUnderlineStyleAttributeName] as? NSNumber
+        if value == 0 || value == nil {
+        self.typingAttributes[NSStrikethroughStyleAttributeName] = 1
+        }else{
+        self.typingAttributes[NSStrikethroughStyleAttributeName] = 0
+        }
+    }
+    /**
+    *  设置删除线颜色
+    */
+    func strikethroughcolor(color: UIColor) {
+        self.typingAttributes[NSStrikethroughColorAttributeName] = color
+    }
+
 
 
 }
